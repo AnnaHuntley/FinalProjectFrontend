@@ -102,20 +102,25 @@ function Memories() {
         </button>
       </form>
       <ul>
-        {memories.map((memory) => (
-          <li key={memory.id}>
-            <p>{memory.description}</p>
-            <p>{memory.date}</p>
-            <p>{memory.location}</p>
-            <button onClick={() => handleEditMemory(memory.id, { description: 'Updated description' })}>
-              Edit Memory
-            </button>
-            <button onClick={() => handleDeleteMemory(memory.id)}>Delete Memory</button>
-          </li>
-        ))}
+        {Array.isArray(memories) && memories.length > 0 ? (
+          memories.map((memory) => (
+            <li key={memory.id}>
+              <p>{memory.description}</p>
+              <p>{memory.date}</p>
+              <p>{memory.location}</p>
+              <button onClick={() => handleEditMemory(memory.id, { description: 'Updated description' })}>
+                Edit Memory
+              </button>
+              <button onClick={() => handleDeleteMemory(memory.id)}>Delete Memory</button>
+            </li>
+          ))
+        ) : (
+          <p>No memories to display.</p>
+        )}
       </ul>
     </div>
   );
+  
 }
 
 export default Memories;

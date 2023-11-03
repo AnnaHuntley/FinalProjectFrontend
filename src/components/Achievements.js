@@ -3,7 +3,11 @@ import axios from 'axios';
 
 function Achievements() {
   const [achievements, setAchievements] = useState([]);
-  const [newAchievement, setNewAchievement] = useState('');
+  const [newAchievement, setNewAchievement] = useState({
+    title: '',
+    description: '',
+    date: '',
+  });
 
   useEffect(() => {
     fetchAchievements();
@@ -18,16 +22,23 @@ function Achievements() {
     }
   };
 
-  const handleNewAchievementChange = (e) => {
-    setNewAchievement(e.target.value);
+  const handleTitleChange = (e) => {
+    setNewAchievement({ ...newAchievement, title: e.target.value });
+  };
+
+  const handleDescriptionChange = (e) => {
+    setNewAchievement({ ...newAchievement, description: e.target.value });
+  };
+
+  const handleDateChange = (e) => {
+    setNewAchievement({ ...newAchievement, date: e.target.value });
   };
 
   const handleAddAchievement = async () => {
     try {
-      const newAchievementData = { achievement: newAchievement };
-      await axios.post('http://localhost:4000/achievements', newAchievementData);
+      await axios.post('http://localhost:4000/achievements', newAchievement);
       fetchAchievements();
-      setNewAchievement('');
+      setNewAchievement({ title: '', description: '', date: '' });
     } catch (error) {
       console.error('Error adding achievement:', error);
     }
@@ -54,20 +65,39 @@ function Achievements() {
   return (
     <div>
       <h1>Achievements</h1>
-      <div>
-        <input type="text" value={newAchievement} onChange={handleNewAchievementChange} />
-        <button onClick={handleAddAchievement}>Add Achievement</button>
-      </div>
+      <form>
+        <div>
+          <label>Title:</label>
+          <input type="text" value={newAchievement.title} onChange={handleTitleChange} />
+        </div>
+        <div>
+          <label>Description:</label>
+          <input type="text" value={newAchievement.description} onChange={handleDescriptionChange} />
+        </div>
+        <div>
+          <label>Date:</label>
+          <input type="date" value={newAchievement.date} onChange={handleDateChange} />
+        </div>
+        <button type="button" onClick={handleAddAchievement}>
+          Add Achievement
+        </button>
+      </form>
       <ul>
-        {achievements.map((achievement) => (
-          <li key={achievement.id}>
-            <p>{achievement.achievement}</p>
-            <button onClick={() => handleEditAchievement(achievement.id, { achievement: 'Updated achievement' })}>
-              Edit Achievement
-            </button>
-            <button onClick={() => handleDeleteAchievement(achievement.id)}>Delete Achievement</button>
-          </li>
-        ))}
+        {Array.isArray(achievements) && achievements.length > 0 ? (
+          achievements.map((achievement) => (
+            <li key={achievement.id}>
+              <p>{achievement.title}</p>
+              <p>{achievement.description}</p>
+              <p>{achievement.date}</p>
+              <button onClick={() => handleEditAchievement(achievement.id, { title: 'Updated title' })}>
+                Edit Achievement
+              </button>
+              <button onClick={() => handleDeleteAchievement(achievement.id)}>Delete Achievement</button>
+            </li>
+          ))
+        ) : (
+          <p>No achievements to display.</p>
+        )}
       </ul>
     </div>
   );

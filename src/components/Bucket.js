@@ -24,12 +24,17 @@ function BucketList() {
 
   const handleAddItem = async () => {
     try {
-      const newItemData = { item: newItem };
-      await axios.post('http://localhost:4000/bucket_lists', newItemData);
+      // Get the CSRF token const csrfToken = document.querySelector('meta[name="csrf-token"]').content; 
+      await axios.post('http://localhost:4000/bucket_lists', { item: newItem }, {
+      headers: {
+        //'X-CSRF-Token': csrfToken,
+        'Content-Type': 'application/json', 
+      },
+    });
       fetchBucketList();
       setNewItem('');
     } catch (error) {
-      console.error('Error adding item to bucket list:', error);
+      console.error('Error adding item to the bucket list:', error);
     }
   };
 
@@ -38,7 +43,7 @@ function BucketList() {
       await axios.put(`http://localhost:4000/bucket_lists/${itemId}`, updatedItem);
       fetchBucketList();
     } catch (error) {
-      console.error('Error updating item in bucket list:', error);
+      console.error('Error updating item in the bucket list:', error);
     }
   };
 
@@ -47,7 +52,7 @@ function BucketList() {
       await axios.delete(`http://localhost:4000/bucket_lists/${itemId}`);
       fetchBucketList();
     } catch (error) {
-      console.error('Error deleting item from bucket list:', error);
+      console.error('Error deleting item from the bucket list:', error);
     }
   };
 
@@ -59,15 +64,19 @@ function BucketList() {
         <button onClick={handleAddItem}>Add Item</button>
       </div>
       <ul>
-        {bucketList.map((item) => (
-          <li key={item.id}>
-            <p>{item.item}</p>
-            <button onClick={() => handleEditItem(item.id, { item: 'Updated item' })}>
-              Edit Item
-            </button>
-            <button onClick={() => handleDeleteItem(item.id)}>Delete Item</button>
-          </li>
-        ))}
+        {Array.isArray(bucketList) && bucketList.length > 0 ? (
+          bucketList.map((item) => (
+            <li key={item.id}>
+              <p>{item.item}</p>
+              <button onClick={() => handleEditItem(item.id, { item: 'Updated item' })}>
+                Edit Item
+              </button>
+              <button onClick={() => handleDeleteItem(item.id)}>Delete Item</button>
+            </li>
+          ))
+        ) : (
+          <p>No bucket list items to display.</p>
+        )}
       </ul>
     </div>
   );
