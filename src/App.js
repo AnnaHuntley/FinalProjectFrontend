@@ -6,6 +6,9 @@ import Achievements from './components/Achievements';
 import Home from './components/Home';
 import Navbar from './components/Navbar';
 import OfflineFallback from './components/OfflineFallback';
+import SignIn from './components/SignIn';
+import SignOut from './components/SignOut';
+import SignUp from './components/SignUp';
 
 
 function App() {
@@ -19,6 +22,9 @@ function App() {
           <Route path="/bucket_lists" element={<Bucket />} />
           <Route path="/achievements" element={<Achievements />} />
           <Route path="/offline" element={<OfflineFallback />}/> 
+          <Route path="/login" element={<SignIn />}/>
+          <Route path="/signup" element={<SignUp />}/>
+          <Route path="/logout" element={<SignOut />}/>
         </Routes>
       </Router>
     </div>

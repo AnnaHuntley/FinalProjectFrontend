@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import MyCalendar from './MyCalendar'; // Import your calendar component
 
 function Memories() {
   const [memories, setMemories] = useState([]);
@@ -54,6 +55,14 @@ function Memories() {
       fetchMemories();
       setNewMemory({ description: '', date: '', location: '' });
       setPhotos([]);
+
+      // Call the function to add the event to the calendar
+      const newEvent = {
+        title: newMemory.description,
+        start: new Date(newMemory.date), // Use the provided date
+        end: new Date(newMemory.date),
+      };
+      handleAddEvent(newEvent);
     } catch (error) {
       console.error('Error adding memory:', error);
     }
@@ -80,7 +89,7 @@ function Memories() {
   return (
     <div>
       <h1>Memories</h1>
-      <form>
+      <form className="memory-sticker">
         <div>
           <label>Description:</label>
           <input type="text" value={newMemory.description} onChange={handleDescriptionChange} />
@@ -118,9 +127,11 @@ function Memories() {
           <p>No memories to display.</p>
         )}
       </ul>
+
+      {/* Render your calendar component */}
+      <MyCalendar />
     </div>
   );
-  
 }
 
 export default Memories;

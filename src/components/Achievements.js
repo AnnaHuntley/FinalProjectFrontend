@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../App.css'
 
 function Achievements() {
   const [achievements, setAchievements] = useState([]);
@@ -65,7 +66,7 @@ function Achievements() {
   return (
     <div>
       <h1>Achievements</h1>
-      <form>
+      <form className="accordion"> 
         <div>
           <label>Title:</label>
           <input type="text" value={newAchievement.title} onChange={handleTitleChange} />

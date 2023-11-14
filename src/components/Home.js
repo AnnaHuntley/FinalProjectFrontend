@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import MyCalendar from './MyCalendar';
+
+
 
 function Home() {
   return (
     <div className="home-page">
-      {/* Header Section */}
-      <header className="app-header">
+    <header className="app-header">
         <div className="logo">
           <img src="your-logo.png" alt="Memory App Logo" />
           <h1>Memory App</h1>
@@ -14,6 +16,8 @@ function Home() {
           <Link to="/memories">Memories</Link>
           <Link to="/bucket_lists">Bucket List</Link>
           <Link to="/achievements">Achievements</Link>
+          <Link to="/signup">Sign Up</Link>
+          <Link to="/login">Login</Link>
         </nav>
       </header>
 
@@ -62,7 +66,10 @@ function Home() {
           Get Started
         </Link>
       </section>
-
+      <div>
+      {/* Your existing page content */}
+      <MyCalendar />
+    </div>
       {/* Footer Section */}
       <footer className="app-footer">
         <div className="contact-info">
@@ -74,6 +81,7 @@ function Home() {
         </div>
       </footer>
     </div>
+    
   );
 }
 

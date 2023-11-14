@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import MyCalendar from './MyCalendar'; // Import your calendar component
 
 function BucketList() {
   const [bucketList, setBucketList] = useState([]);
@@ -33,6 +34,14 @@ function BucketList() {
     });
       fetchBucketList();
       setNewItem('');
+
+      // Call the function to add the event to the calendar
+      const newEvent = {
+        title: newItem,
+        start: new Date(), // Use the current date as an example, replace it with the actual date
+        end: new Date(),
+      };
+      handleAddEvent(newEvent);
     } catch (error) {
       console.error('Error adding item to the bucket list:', error);
     }
@@ -59,7 +68,7 @@ function BucketList() {
   return (
     <div>
       <h1>Bucket List</h1>
-      <div>
+      <div className="bucket-list-tab">
         <input type="text" value={newItem} onChange={handleNewItemChange} />
         <button onClick={handleAddItem}>Add Item</button>
       </div>
@@ -78,6 +87,9 @@ function BucketList() {
           <p>No bucket list items to display.</p>
         )}
       </ul>
+
+      {/* Render your calendar component */}
+      <MyCalendar />
     </div>
   );
 }

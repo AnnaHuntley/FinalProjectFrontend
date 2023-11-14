@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
-//import logo from '../images/racecource-view-low-resolution-logo-color-on-transparent-background.png'
+import logo from '../Logo.png';
+import '../App.css'
 
 
 function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/">
-            {/*<img src={logo} alt="Logo" className="navbar-logo" />*/}
+            {<img src={logo} alt="Logo" className="navbar-logo" />}
       </Link>
       <ul>
         <li>
@@ -20,6 +21,12 @@ function Navbar() {
         </li>
         <li>
           <Link to="/achievements">Achievements</Link>
+        </li>
+        <li>
+          <Link to="/signup">Sign Up</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
         </li>
       </ul>
     </nav>
