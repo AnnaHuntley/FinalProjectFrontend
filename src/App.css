@@ -2,28 +2,48 @@
   display: flex;
 }
 
-.sidenav {
+.home-container {
+  display: flex;
+}
+
+.bucket-container, .achievement-container, .memory-container, .container {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center the content vertically */
+  align-items: center; /* Center the content horizontally */
+  padding-left: 200px;
+}
+.home-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding-left: 250px;
+}
+.about-section{
+  width: 80%;
+}
+
+
+.sidenav {  
   height: 100%;
-  width: 250px;
+  width: 220px;
   position: fixed;
   top: 0;
   left: 0;
   background-color: #232323;
-  padding-top: 20px;
+  padding-top: 70px;
   display: flex;
   flex-direction: column;
   align-items: center;
   color: #818181;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
 }
-
-.sidenav button {
-  font-size: 20px;
-  background-color: #ffcc00;
-  border: none;
-  color: #232323;
-  padding: 10px 15px;
-  margin-bottom: 10px;
-  cursor: pointer;
+.sidenav.open {
+  transform: translateX(0);
 }
 
 .sidenav a {
@@ -34,8 +54,28 @@
   display: block;
   transition: 0.3s;
   cursor: pointer;
+  
 }
 
+.navbar-toggle {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 2; /*above other elements */
+}
+.navbar-logo {
+  width: 200px; 
+  height: auto;
+  border-radius: 10px;
+  transition: transform 0.3s ease-in-out;
+}
+.navbar-toggle:hover .navbar-logo {
+  transform: scale(1.1);
+}
 .sidenav a:hover {
   color: #f1f1f1;
 }
@@ -45,33 +85,61 @@
   padding: 20px;
 }
 
-.nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.section {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: yellow;
+  border-radius: 10px;
+  font-family: 'Amatic SC', cursive;
 }
 
-.nav-list li {
+/* Cloud shape styling */
+
+
+/* Styling for specific sections */
+.hero-section::before {
+  background-color: orange;
+}
+
+.features-section::before {
+  background-color: orange;
+}
+
+.cta-section::before {
+  background-color: orange;
+}
+
+/* Testimonials section styling */
+.testimonials-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.testimonial {
   margin-bottom: 10px;
+  background-color: yellow;
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.nav-list a {
+/* CTA button styling */
+.cta-button {
+  background-color: orange;
+  color: yellow;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
   text-decoration: none;
-  color: #333;
-  font-weight: bold;
+  font-family: 'Amatic SC', cursive;
   font-size: 18px;
-  transition: color 0.3s;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-.nav-list a:hover {
-  color: #ffcc00;
-}
-
-.navbar {
-  width: 100%;
-  background: yellow;
-  color: orange;
-  font-family: 'Pacifico', cursive;
+.cta-button:hover {
+  background-color: #ffcc00;
 }
 
 .memory-sticker {
@@ -88,7 +156,9 @@
   font-family: 'Pacifico', cursive;
   border: 2px solid yellow;
   border-radius: 10px;
+  
 }
+
 
 .accordion {
   background: yellow;
@@ -96,4 +166,52 @@
   font-family: 'Amatic SC', cursive;
   border: 2px solid orange;
   border-radius: 10px;
+}
+
+/* Add this to your existing CSS */
+
+/* Style for MyCalendar */
+.calendar-container {
+  margin-top: 20px;
+}
+
+/* Style for calendar header */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Style for calendar title */
+.calendar-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+
+
+/* Style for calendar button */
+.calendar-button {
+  background-color: orange;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+}
+
+.calendar-button:hover {
+  background-color: #ffcc00;
+}
+
+/* Style for calendar */  
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }

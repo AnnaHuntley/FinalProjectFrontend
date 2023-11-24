@@ -3,7 +3,7 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 
-const MyCalendar = () => {
+const MyCalendar = ({ style }) => {
   const localizer = momentLocalizer(moment);
   const [events, setEvents] = useState([]);
 
@@ -28,15 +28,19 @@ const MyCalendar = () => {
   };
 
   return (
-    <div>
+    <div className="calendar-container" style={{...style, marginLeft: 'auto' }}>
+      <div className="calendar-header">
+      
+       
+      </div>
       <Calendar
         localizer={localizer}
         events={events}
         startAccessor="start"
         endAccessor="end"
         style={{ height: 500 }}
+        className="calendar"
       />
-      {/* Your other UI components */}
     </div>
   );
 };

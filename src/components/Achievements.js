@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '../App.css'
+import '../App.css';
+import MyCalendar from './MyCalendar';
 
 function Achievements() {
   const [achievements, setAchievements] = useState([]);
@@ -18,6 +19,8 @@ function Achievements() {
     try {
       const response = await axios.get('http://localhost:4000/achievements');
       setAchievements(response.data);
+      
+    console.log(response.data);
     } catch (error) {
       console.error('Error fetching achievements:', error);
     }
@@ -64,7 +67,7 @@ function Achievements() {
   };
 
   return (
-    <div>
+    <div className="achievement-container">
       <h1>Achievements</h1>
       <form className="accordion"> 
         <div>
@@ -100,6 +103,7 @@ function Achievements() {
           <p>No achievements to display.</p>
         )}
       </ul>
+      <MyCalendar />
     </div>
   );
 }

@@ -1,8 +1,10 @@
+// src/components/Memories.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import MyCalendar from './MyCalendar'; // Import your calendar component
+import '../App.css';
+import MyCalendar from './MyCalendar';
 
-function Memories() {
+function Memories({ handleAddEvent }) {
   const [memories, setMemories] = useState([]);
   const [newMemory, setNewMemory] = useState({
     description: '',
@@ -87,7 +89,7 @@ function Memories() {
   };
 
   return (
-    <div>
+    <div className="memory-container">
       <h1>Memories</h1>
       <form className="memory-sticker">
         <div>
@@ -117,7 +119,11 @@ function Memories() {
               <p>{memory.description}</p>
               <p>{memory.date}</p>
               <p>{memory.location}</p>
-              <button onClick={() => handleEditMemory(memory.id, { description: 'Updated description' })}>
+              <button
+                onClick={() =>
+                  handleEditMemory(memory.id, { description: 'Updated description' })
+                }
+              >
                 Edit Memory
               </button>
               <button onClick={() => handleDeleteMemory(memory.id)}>Delete Memory</button>
@@ -127,9 +133,7 @@ function Memories() {
           <p>No memories to display.</p>
         )}
       </ul>
-
-      {/* Render your calendar component */}
-      <MyCalendar />
+      <MyCalendar style={{ width: '100px', height: '450px' }}/>
     </div>
   );
 }

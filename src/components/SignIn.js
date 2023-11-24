@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 // Set the base URL for Axios (use try/catch for error handling)
 try {
   axios.defaults.baseURL = 'http://localhost:4000'; // Adjust this to match your API endpoint.
+  axios.defaults.withCredentials = true; // Set withCredentials globally
 } catch (error) {
   console.error('Failed to set Axios base URL:', error);
 }
@@ -14,12 +15,26 @@ function SignIn() {
   const [error, setError] = useState(''); // State for displaying login errors
   const navigate = useNavigate();
 
+  /*useEffect(() => {
+    // Fetch CSRF token from meta tags when the component mounts
+    const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
+const csrfToken = csrfTokenElement ? csrfTokenElement.content : null;
+
+if (!csrfToken) {
+  console.error('CSRF token not found');
+  // Handle the absence of CSRF token, such as showing an error message or redirecting to an error page.
+  return;
+}
+    // Set CSRF token in Axios headers
+    axios.defaults.headers.common['X-CSRF-Token'] = csrfToken;
+  }, []); // Run this effect only once when the component mounts*/
+
   const handleSignIn = async () => {
     try {
       const response = await axios.post('/users/sign_in', user, {
-        withCredentials: true,
         headers: {
           Accept: 'application/json',
+          'Content-Type': 'application/json', 
         },
       });
       // Assuming a successful response contains a user session or token
@@ -34,7 +49,7 @@ function SignIn() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Sign In</h2>
       <input
         type="text"

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 // Set the base URL for Axios (use try/catch for error handling)
 try {
-  axios.defaults.baseURL = '/api'; // Adjust this to match your API endpoint.
+  axios.defaults.baseURL = 'http://localhost:4000'; // Adjust this to match your API endpoint.
 } catch (error) {
   console.error('Failed to set Axios base URL:', error);
 }
@@ -33,7 +33,7 @@ function SignUp() {
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Sign Up</h2>
       <input
         type="text"
