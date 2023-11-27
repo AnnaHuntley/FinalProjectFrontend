@@ -14,13 +14,19 @@ function BucketList({ handleAddEvent }) {
 
   const fetchBucketList = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/bucket_lists');
+      const response = await axios.get('http://localhost:4000/bucket_lists', {
+        headers: {
+          Accept: 'application/json',
+        },
+      });
+      console.log('API Response:', response.data); // Log the response
       setBucketList(response.data);
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching bucket list:', error);
     }
   };
+  
 
   const handleNewItemChange = (e) => {
     setNewItem(e.target.value);
@@ -35,6 +41,7 @@ function BucketList({ handleAddEvent }) {
         {
           headers: {
             //'X-CSRF-Token': csrfToken,
+            Accept: 'application/json',
             'Content-Type': 'application/json',
           },
         }
@@ -97,7 +104,7 @@ function BucketList({ handleAddEvent }) {
                      <p>No bucket list items to display.</p>
                    )}
                  </ul>
-                 <MyCalendar />
+                 <MyCalendar style={{ width: '100px', height: '450px' }} />
                </div>
                
              );

@@ -17,7 +17,13 @@ function Achievements() {
 
   const fetchAchievements = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/achievements');
+      const response = await axios.get('http://localhost:4000/achievements', {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true, 
+      });
       setAchievements(response.data);
       
     console.log(response.data);
@@ -40,7 +46,13 @@ function Achievements() {
 
   const handleAddAchievement = async () => {
     try {
-      await axios.post('http://localhost:4000/achievements', newAchievement);
+      await axios.post('http://localhost:4000/achievements', newAchievement, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true, 
+      });
       fetchAchievements();
       setNewAchievement({ title: '', description: '', date: '' });
     } catch (error) {
@@ -103,7 +115,7 @@ function Achievements() {
           <p>No achievements to display.</p>
         )}
       </ul>
-      <MyCalendar />
+      <MyCalendar style={{ width: '100px', height: '450px' }} />
     </div>
   );
 }
