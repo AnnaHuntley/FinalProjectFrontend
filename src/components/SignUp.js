@@ -22,8 +22,8 @@ function SignUp() {
         alert("Password and Password Confirmation do not match.");
         return;
       }
-
-      const response = await axios.post('/users/sign_up', user);
+  
+      const response = await axios.post('/api/v1/signup', user);
       // Handle successful sign-up, e.g., redirect to the login page.
       navigate('/login');
     } catch (error) {
@@ -31,6 +31,7 @@ function SignUp() {
       setError('Sign-up failed. Please check your information.');
     }
   };
+  
 
   return (
     <div className="container">
