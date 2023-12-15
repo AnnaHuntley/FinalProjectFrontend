@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 // Set the base URL for Axios (use try/catch for error handling)
 try {
-  axios.defaults.baseURL = 'http://localhost:4000/api/v1'; // Adjust this to match your API endpoint.
+  axios.defaults.baseURL = 'http://localhost:4000'; // Adjust this to match your API endpoint.
   axios.defaults.withCredentials = true; // Set withCredentials globally
 } catch (error) {
   console.error('Failed to set Axios base URL:', error);
@@ -17,19 +17,17 @@ function SignIn() {
 
   const handleSignIn = async () => {
     try {
-      const response = await axios.post('/login', { user }, {
+      const response = await axios.post('/api/v1/login', { user }, {
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
       });
+      console.log('Login Response:', response.data);
 
-      // Assuming a successful response contains a user session or token
-      // Handle successful login (e.g., store user session/token).
-      // Redirect to the home page or any other desired page.
       navigate('/');
     } catch (error) {
-      // Handle login errors, e.g., show an error message to the user.
+      console.error('Login Error:', error);
       setError('Login failed. Please check your credentials.');
     }
   };

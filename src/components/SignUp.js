@@ -19,19 +19,30 @@ function SignUp() {
     try {
       // Check if the passwords match
       if (user.password !== user.passwordConfirmation) {
-        alert("Password and Password Confirmation do not match.");
+        alert('Password and Password Confirmation do not match.');
         return;
       }
-  
-      const response = await axios.post('/api/v1/signup', user);
-      // Handle successful sign-up, e.g., redirect to the login page.
+
+      // Create the request payload with the 'user' key
+      const userPayload = {
+        user: {
+          email: user.email,
+          password: user.password,
+          passwordConfirmation: user.passwordConfirmation,
+        },
+      };
+
+      const response = await axios.post('/api/v1/signup', userPayload, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       navigate('/login');
     } catch (error) {
-      // Handle sign-up errors, e.g., show an error message to the user.
+
       setError('Sign-up failed. Please check your information.');
     }
   };
-  
 
   return (
     <div className="container">

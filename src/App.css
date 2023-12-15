@@ -6,6 +6,10 @@
   display: flex;
 }
 
+.container input {
+  width: 300px;
+}
+
 .bucket-container, .achievement-container, .memory-container, .container {
   flex-grow: 1;
   display: flex;
@@ -66,7 +70,7 @@
   position: fixed;
   top: 10px;
   left: 10px;
-  z-index: 2; /*above other elements */
+  z-index: 2; 
 }
 .navbar-logo {
   width: 200px; 
@@ -95,10 +99,7 @@
   font-family: 'Amatic SC', cursive;
 }
 
-/* Cloud shape styling */
 
-
-/* Styling for specific sections */
 .hero-section::before {
   background-color: orange;
 }
@@ -111,7 +112,8 @@
   background-color: orange;
 }
 
-/* Testimonials section styling */
+
+
 .testimonials-section {
   display: flex;
   flex-direction: column;
@@ -125,7 +127,6 @@
   border-radius: 10px;
 }
 
-/* CTA button styling */
 .cta-button {
   background-color: orange;
   color: yellow;
@@ -142,6 +143,51 @@
 .cta-button:hover {
   background-color: #ffcc00;
 }
+/*************** Memory page *************************/
+
+.memory-list {
+  list-style: none;
+  padding: 0;
+}
+
+.memory-render {
+  background-color: #fff; 
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.memory-render img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
+.memory-render p {
+  margin: 0 0 10px;
+  font-size: 16px;
+  color: #333;
+}
+
+.memory-render button, .memory-sticker button  {
+  background-color: #ba3b0a;
+  color: #fff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
+  margin-top: 10px;
+}
+
+.memory-render button:hover {
+  background-color: #ff6347;
+}
 
 .memory-sticker {
   background: yellow;
@@ -149,7 +195,13 @@
   font-family: 'Amatic SC', cursive;
   border: 2px solid orange;
   border-radius: 10px;
+  padding: 10px;
 }
+
+.memory-sticker textarea, input{
+  width: 90%;
+}
+
 
 
 /******************bucketpage*****************************/
@@ -178,13 +230,13 @@
 
 .bucket-list-tab textarea {
   flex-grow: 2;
-  width: 400px;
-  height: 400px;
+  width:400px;
+  height: 200px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  resize: vertical; /* Allow vertical resizing */
-  overflow-y: auto; /* Add a scrollbar when the content overflows vertically */
+  resize: vertical; 
+  overflow-y: auto;
 }
 
 
@@ -212,7 +264,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 20px;
 }
+
 
 .bucket-list-item textarea {
   flex-grow: 2;
@@ -279,7 +333,7 @@ margin-left: 20px;
   border-radius: 10px;
   margin-bottom: 10px; 
   padding: 10px; 
-  width: 300px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -287,39 +341,34 @@ margin-left: 20px;
 
 
 .achievement li button {
-  margin-top: 5px; /* Add some spacing between buttons */
+  margin-top: 5px;
 }
 
 
 .achievement textarea {
   width: 300px;
   height: 300px;
-  /* Add any other styles you want */
 }
 
 .achievement button, .achievement-render button {
-  background-color: orange; /* Green background */
-  color: white; /* White text */
-  padding: 10px 15px; /* Padding for better appearance */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Cursor on hover */
+  background-color: orange; 
+  color: white; 
+  padding: 10px 15px; 
+  border: none; 
+  border-radius: 5px; 
+  cursor: pointer; 
   margin-right: 10px; 
-  margin-top: 10px;/* Add some margin to the right of the button */
+  margin-top: 10px;
 }
 
 .achievement button:hover,  .achievement-render button:hover {
-  background-color: #ba3b0a; /* Darker green on hover */
-} yuu 
+  background-color: #ba3b0a;
+}
 
-
-
-/* Style for MyCalendar */
 .calendar-container {
   margin-top: 20px;
 }
 
-/* Style for calendar header */
 .calendar-header {
   display: flex;
   justify-content: space-between;
@@ -327,7 +376,6 @@ margin-left: 20px;
   margin-bottom: 10px;
 }
 
-/* Style for calendar title */
 .calendar-title {
   font-size: 24px;
   font-weight: bold;
@@ -335,8 +383,6 @@ margin-left: 20px;
 }
 
 
-
-/* Style for calendar button */
 .calendar-button {
   background-color: orange;
   color: #fff;
@@ -353,7 +399,7 @@ margin-left: 20px;
   background-color: #ffcc00;
 }
 
-/* Style for calendar */  
+
 .calendar-container {
   display: flex;
   flex-direction: column;
@@ -363,4 +409,55 @@ margin-left: 20px;
 
 .contact-info{
   margin-left: 20px;
+}
+
+
+.highlighted-event {
+  background-color: #ba3b0a;
+  border: 1px solid #ff6347;
+}
+
+.signout{
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+@media (max-width: 768px) {
+  .bucket-container, .achievement-container, .memory-container, .container {
+    padding-left: 20px;
+  }
+
+  .home-content {
+    padding-left: 20px;
+  }
+
+  .bucket-list-tab textarea {
+    width: 100%; 
+    max-width: none;
+  }
+
+  .sidenav {
+    width: 100%;
+    transform: translateX(-100%);
+  }
+
+  .sidenav.open {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 576px) {
+  .bucket-container, .achievement-container, .memory-container, .container, .home-content {
+    padding-left: 20px;
+    padding-top: 50px;
+  }
+}
+
+@media (max-width: 992px) {
+  .sidenav {
+    padding-top: 50px; 
+  }
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
 
 
-axios.defaults.baseURL = '/api'; // Set your API endpoint.
+axios.defaults.baseURL = 'http://localhost:4000';
 
 function SignOut() {
     const navigate = useNavigate();
@@ -21,7 +21,7 @@ function SignOut() {
   };
 
   return (
-    <div>
+    <div className='signout'>
       <h2>Sign Out</h2>
       <button onClick={handleSignOut}>Sign Out</button>
     </div>

@@ -10,15 +10,16 @@ function Memories({ handleAddEvent }) {
     description: '',
     date: '',
     location: '',
+    photo: null,
   });
-  const [photos, setPhotos] = useState([]);
+
   const [editingMemoryId, setEditingMemoryId] = useState(null);
   const [editedMemoryFields, setEditedMemoryFields] = useState({
     title: '',
     description: '',
     date: '',
     location: '',
-    photos: [],
+    photo: null,
   });
   const hasRendered = useRef(false);
 
@@ -28,20 +29,19 @@ function Memories({ handleAddEvent }) {
       const response = await axios.get('http://localhost:4000/memories', {
         headers: {
           Accept: 'application/json',
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
         withCredentials: true,
       });
-
-      // Flatten the nested arrays
-      const flattenedMemories = response.data.flat();
-
-      console.log('Fetched Memories:', flattenedMemories);
-      setMemories(flattenedMemories);
+  
+      console.log('Fetched Memories:', response.data);
+      setMemories(response.data);
     } catch (error) {
       console.error('Error fetching memories:', error);
     }
   }, []);
+  
+
 
   useEffect(() => {
     if (!hasRendered.current) {
@@ -67,46 +67,51 @@ function Memories({ handleAddEvent }) {
   };
 
   const handlePhotoChange = (e) => {
-    const selectedPhotos = Array.from(e.target.files);
-    setPhotos(selectedPhotos);
+    const selectedPhoto = e.target.files[0];
+    setNewMemory((prevMemory) => ({
+      ...prevMemory,
+      photo: selectedPhoto,
+    }));
   };
 
   const handleAddMemory = async () => {
     try {
       const formData = new FormData();
-      formData.append('title', newMemory.title)
-      formData.append('description', newMemory.description);
-      formData.append('date', newMemory.date);
-      formData.append('location', newMemory.location);
-      photos.forEach((photo, index) => {
-        formData.append(`photo_${index}`, photo);
+      formData.append('memory[title]', newMemory.title);
+      formData.append('memory[description]', newMemory.description);
+      formData.append('memory[date]', newMemory.date);
+      formData.append('memory[location]', newMemory.location);
+      if (newMemory.photo) {
+        formData.append('memory[photo]', newMemory.photo);
+      }
+  
+  
+      await axios.post('http://localhost:4000/memories', formData, {
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
       });
 
-      await axios.post('http://localhost:4000/memories', formData, {
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  },
-  withCredentials: true,
-});
 
-// Fetch memories after adding a new memory
 await fetchMemories();
 
-setNewMemory({ title: '', description: '', date: '', location: '' });
-setPhotos([]);
+setNewMemory({ title: '', description: '', date: '', location: '', photo: null});
 
 
-      const newEvent = {
-        title: newMemory.title,   
-        start: new Date(newMemory.date),
-        end: new Date(newMemory.date),
-      };
-      handleAddEvent(newEvent);
-    } catch (error) {
-      console.error('Error adding memory:', error);
-    }
-  };
+const newEvent = {
+  title: newMemory.title,
+  start: new Date(newMemory.date),
+  end: new Date(newMemory.date),
+};
+console.log('Calling handleAddEvent with:', newEvent);
+handleAddEvent(newEvent);
+} catch (error) {
+console.error('Error adding memory:', error);
+}
+};
+
 
   const handleEditMemory = async (memoryId) => {
     const editedMemory = memories.find((memory) => memory.id === memoryId);
@@ -129,18 +134,21 @@ setPhotos([]);
       photos: selectedPhotos,
     }));
   };
-
   const handleSaveEditMemory = async () => {
     try {
       const formData = new FormData();
-      formData.append('title', editedMemoryFields.title);
-      formData.append('description', editedMemoryFields.description);
-      formData.append('date', editedMemoryFields.date);
-      formData.append('location', editedMemoryFields.location);
-      editedMemoryFields.photos.forEach((photo, index) => {
-      formData.append(`photo_${index}`, photo);
-    });
-
+      formData.append('memory[title]', editedMemoryFields.title);
+      formData.append('memory[description]', editedMemoryFields.description);
+      formData.append('memory[date]', editedMemoryFields.date);
+      formData.append('memory[location]', editedMemoryFields.location);
+      
+      // Only append photos if there are photos to update
+      if (editedMemoryFields.photos.length > 0) {
+        editedMemoryFields.photos.forEach((photo, index) => {
+          formData.append('memory[photo]', photo);
+        });
+      }
+  
       await axios.put(`http://localhost:4000/memories/${editingMemoryId}`, formData, {
         headers: {
           Accept: 'application/json',
@@ -153,6 +161,7 @@ setPhotos([]);
       console.error('Error updating memory:', error);
     }
   };
+  
 
   const handleCancelEditMemory = () => {
     setEditingMemoryId(null);
@@ -171,6 +180,7 @@ setPhotos([]);
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+    
         },
       });
       fetchMemories();
@@ -240,7 +250,7 @@ setPhotos([]);
       );
     } else {
       return (
-        <div key={memory.id}>
+        <div className="memory-render" key={memory.id}>
           <p>{memory.title}</p>
           <p>{memory.description}</p>
           <p>{memory.date}</p>
@@ -248,9 +258,8 @@ setPhotos([]);
           <div>
             {memory.photo_url && (
               <img
-                src={`http://localhost:4000${memory.photo_url}`}
+                src={`http://localhost:4000/${memory.photo_url}`}
                 alt={`Photo`}
-                style={{ maxWidth: '100%' }}
               />
             )}
           </div>
@@ -271,7 +280,7 @@ setPhotos([]);
         </div>
         <div>
           <label>Description:</label>
-          <input type="text" value={newMemory.description} onChange={handleDescriptionChange} />
+          <textarea value={newMemory.description} onChange={handleDescriptionChange} rows={3} />
         </div>
         <div>
           <label>Date:</label>
@@ -284,13 +293,16 @@ setPhotos([]);
         <div>
           <label>Photos:</label>
           <input type="file" multiple onChange={handlePhotoChange} />
+          <p style={{ color: 'gray', fontSize: '12px' }}>
+             (Only 1 photo allowed)
+         </p>
         </div>
         <button type="button" onClick={handleAddMemory}>
           Add Memory
         </button>
       </form>
 
-      <ul>
+      <ul className="memory-list">
         {memories && memories.length > 0 ? (
           memories.map((memory) => (
             <li key={memory.id}>{renderMemoryOrEditForm(memory)}</li>

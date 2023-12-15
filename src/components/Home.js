@@ -9,15 +9,21 @@ function Home() {
      
 
       <div className="home-content">
-        {/* Hero Section */}
-        <section className="hero-section">
-          <h2>Preserve Your Precious Memories</h2>
-          <p>Relive and cherish the moments that matter most to you.</p>
-          <Link to="/signup" className="cta-button">
-            Get Started
-          </Link>
+      <section className="cta-section">
+          <h2>Join Memory App Today</h2>
+          <div>
+          
+            <Link to="/achievements" className="cta-button">
+              Achievements
+            </Link>
+            <Link to="/memories" className="cta-button">
+              Memories
+            </Link>
+            <Link to="/bucket_lists" className="cta-button">
+              Bucket Lists
+            </Link>
+          </div>
         </section>
-
         {/* About Section */}
         <section className="about-section">
   <h3>About Memory App</h3>
@@ -33,7 +39,6 @@ function Home() {
   <p>
     Join us on this journey of preserving and celebrating life's beautiful moments. Start your Memory App experience today and turn ordinary moments into extraordinary memories.
   </p>
-  {/* You can add more content or customize it further */}
 </section>
 
         {/* Key Features Section */}
@@ -53,7 +58,6 @@ function Home() {
             <p>"I love using Memory App to capture life's special moments. It's easy and fun!"</p>
             <p className="user-name">- Sarah J.</p>
           </div>
-          {/* Add more testimonials here */}
         </section>
 
         {/* Call to Action */}
@@ -64,8 +68,7 @@ function Home() {
           </Link>
         </section>
 
-        {/* Your existing page content */}
-        <MyCalendar />
+          <MyCalendar />
       </div>
 
      
